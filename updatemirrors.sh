@@ -20,6 +20,12 @@ function show_help() {
   exit 0
 }
 
+# Check if running with root privileges
+if [[ $EUID -eq 0 ]]; then
+  echo "This script should not be run with sudo. Please run it without sudo and enter your password when prompted."
+  exit 1
+fi
+
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
   key="$1"
