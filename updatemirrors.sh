@@ -58,20 +58,20 @@ if [[ -z "$NUM_MIRRORS" ]]; then
 fi
 
 # Create the backup directory if it doesn't exist
-mkdir -p "$BACKUP_DIR"
+sudo mkdir -p "$BACKUP_DIR"
 echo "Create the backup directory if it doesn't exist: $BACKUP_DIR"
 
 # Create a backup copy of the mirror list file with a timestamp
 BACKUP_FILE="$BACKUP_DIR/mirrorlist_$(date +%Y-%m-%d_%H-%M-%S)"
-cp "$MIRROR_LIST_FILE" "$BACKUP_FILE"
+sudo cp "$MIRROR_LIST_FILE" "$BACKUP_FILE"
 echo "Created backup of mirror list file: $BACKUP_FILE"
 
 # Use Reflector to generate a new mirror list and save it to the original file location
 echo "Updating mirror list with fastest available mirrors..."
 if [[ -n "$COUNTRY" ]]; then
-  reflector --latest $NUM_MIRRORS --sort rate --country "$COUNTRY" --save "$MIRROR_LIST_FILE"
+  sudo reflector --latest $NUM_MIRRORS --sort rate --country "$COUNTRY" --save "$MIRROR_LIST_FILE"
 else
-  reflector --latest $NUM_MIRRORS --sort rate --save "$MIRROR_LIST_FILE"
+  sudo reflector --latest $NUM_MIRRORS --sort rate --save "$MIRROR_LIST_FILE"
 fi
 
 # Confirm that the new mirror list has been generated and saved successfully
